@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity, ImageBackground } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Chart from './components/chart'
@@ -35,17 +35,25 @@ const Detail = ({ route }) => {
     let chartValue = stats?.map(el => +el.floor_price_eth)
     const { id } = route.params
 
+    const displayDay = (day) => {
+        console.log(day);
+    }
+
     return (
         <>
             <View style={styles.top}>
-                <View style={styles.imageContainer}>
-                    <Image
-                        style={styles.mainImage}
-                        source={{
-                            uri: collectionById?.image_url,
-                        }}
-                    />
-                </View>
+                <ImageBackground source={{
+                    uri: collectionById?.banner_image_url
+                }} resizeMode="cover" style={styles.bannerImage}>
+                    <View style={styles.imageContainer}>
+                        <Image
+                            style={styles.mainImage}
+                            source={{
+                                uri: collectionById?.image_url,
+                            }}
+                        />
+                    </View>
+                </ImageBackground>
             </View>
             <View style={styles.container}>
                 <View>
@@ -105,14 +113,20 @@ const Detail = ({ route }) => {
                 </View>
                 <View>
                     <View style={styles.containerDay}>
-                        <TouchableOpacity>
-                            <Text>1d</Text>
+                        <TouchableOpacity onPress={() => displayDay('1d')}>
+                            <View style={styles.buttonDay}>
+                                <Text>1d</Text>
+                            </View>
                         </TouchableOpacity>
-                        <TouchableOpacity>
-                            <Text>7d</Text>
+                        <TouchableOpacity onPress={() => displayDay('7d')} >
+                            <View style={styles.buttonDay}>
+                                <Text>7d</Text>
+                            </View>
                         </TouchableOpacity>
-                        <TouchableOpacity>
-                            <Text>30d</Text>
+                        <TouchableOpacity onPress={() => displayDay('30d')}>
+                            <View style={styles.buttonDay}>
+                                <Text>30d</Text>
+                            </View>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -142,13 +156,20 @@ const Detail = ({ route }) => {
                     <Image
                         style={styles.bottomImage}
                         source={{
-                            uri: 'https://reactnative.dev/img/tiny_logo.png',
+                            uri: collectionById?.image_url,
                         }}
                     />
+                    <View style={styles.infoDiamond}>
+                        <Image
+                            style={styles.diamond}
+                            source={require('./assets/diamond.png')}
+                        />
+                        <Text style={{ color: "white", fontWeight: "bold" }}>#3608</Text>
+                    </View>
                     <Image
                         style={styles.bottomImage}
                         source={{
-                            uri: 'https://reactnative.dev/img/tiny_logo.png',
+                            uri: collectionById?.image_url,
                         }}
                     />
                 </View>
@@ -161,17 +182,40 @@ const Detail = ({ route }) => {
 export default Detail
 
 const styles = StyleSheet.create({
+    infoDiamond: {
+        flexDirection: 'row',
+        backgroundColor: "black",
+        opacity: 0.5,
+        height: 24,
+        width: 80,
+        padding: 2,
+        borderRadius: 10,
+        alignItems: "center",
+        justifyContent: "center",
+        position: "absolute",
+        marginLeft: 40,
+        marginTop: 90
+    },
+    diamond: {
+        height: 14,
+        width: 14
+    },
     bottomImage: {
         height: 120,
         width: 120,
-        margin: 5
+        margin: 10
     },
+    bannerImage: {
+        flex: 1,
+        justifyContent: "center",
+    },
+    buttonDay: {
+        flex: 1,
+        paddingTop: 4
+    },
+
     top: {
         flex: 4,
-        display: "flex",
-        backgroundColor: "#c9eb34",
-        alignItems: "center",
-        justifyContent: "center"
     },
     mainImage: {
         height: 100,
@@ -181,7 +225,14 @@ const styles = StyleSheet.create({
     imageContainer: {
         backgroundColor: "white",
         padding: 5,
-        borderRadius: 10
+        borderRadius: 10,
+        position: 'absolute',
+        // top: 0, 
+        left: "36%",
+        right: "36%",
+        // bottom: 0, 
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     iconArrowRight: {
         marginLeft: 250,
@@ -268,6 +319,7 @@ const styles = StyleSheet.create({
         marginRight: 1
     },
     containerDay: {
+        flexDirection: "row",
         marginLeft: 170,
         marginTop: 20,
         width: 100,
