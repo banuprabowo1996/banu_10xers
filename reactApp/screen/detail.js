@@ -24,7 +24,6 @@ const Detail = ({ route }) => {
         axios.get(`https://api-generator.retool.com/ELI42D/collection_stats?collection_id=${id}`)
             .then(response => {
                 const data = response.data
-                // console.log(data);
                 setStats(data)
             })
             .catch(err => {
@@ -33,7 +32,7 @@ const Detail = ({ route }) => {
             })
     }, [])
 
-    let chartValue = stats.map(el => +el.floor_price_eth)
+    let chartValue = stats?.map(el => +el.floor_price_eth)
     const { id } = route.params
 
     return (
@@ -62,7 +61,7 @@ const Detail = ({ route }) => {
                             style={styles.iconUp}
                             source={require('./assets/up.png')}
                         />
-                        <Text style={styles.fontBold}>{stats[0].floor_price_eth}</Text>
+                        <Text style={styles.fontBold}>{stats ? stats[0].floor_price_eth : null}</Text>
                     </View>
 
                 </View>
@@ -73,7 +72,7 @@ const Detail = ({ route }) => {
                             style={styles.iconUp}
                             source={require('./assets/up.png')}
                         />
-                        <Text style={styles.fontBold}>{stats[0].total_volume_eth}</Text>
+                        <Text style={styles.fontBold}>{stats ? stats[0].total_volume_eth : null}</Text>
                     </View>
                 </View>
                 <View>
@@ -94,7 +93,7 @@ const Detail = ({ route }) => {
                             style={styles.iconBigger}
                             source={require('./assets/upBigger.png')}
                         />
-                        <Text style={styles.fontBoldBigger}>{stats[0].floor_price_eth}</Text>
+                        <Text style={styles.fontBoldBigger}>{stats ? stats[0].floor_price_eth : null}</Text>
                     </View>
                     <View style={styles.information}>
                         <Image

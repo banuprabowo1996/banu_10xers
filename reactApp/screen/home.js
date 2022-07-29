@@ -12,7 +12,6 @@ const Home = () => {
         axios.get("https://api-generator.retool.com/j3Iz08/collections")
             .then(response => {
                 let data = response.data
-                console.log(data);
                 setCollections(data)
             })
             .catch(err => {

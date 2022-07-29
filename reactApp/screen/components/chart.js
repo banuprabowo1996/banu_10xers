@@ -4,12 +4,13 @@ import { BarChart, LineChart, PieChart } from "react-native-gifted-charts";
 
 const Chart = ({ chartValue }) => {
 
-    console.log(chartValue, 'dari component');
-    const data = [{ value: 50 }, { value: 80 }, { value: 90 }, { value: 70 }]
-    // const dataValue = chartValue.forEach(el => {})
-    // console.log(dataValue);
+    // const data = [{ value: 50 }, { value: 80 }, { value: 90 }, { value: 70 }]
+    const result = []
+    const dataValue = chartValue?.forEach(el => {
+        result.push({ value: el })
+    })
     return (
-        <LineChart data={data} style={styles.chart} />
+        <LineChart data={result} style={styles.chart} />
     )
 }
 
